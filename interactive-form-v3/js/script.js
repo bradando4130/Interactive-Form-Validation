@@ -4,7 +4,7 @@
 const form = document.querySelector("form");
 form.reset();
 
-// debounce helper function for delay on form validation check
+// debounce helper function for delay on  form validation check
 const debounce = (fn, delay = 800) => {
   let timeoutId;
   return (...args) => {
@@ -35,7 +35,7 @@ jobTitleInput.addEventListener("change", () => {
     : (jobTitleExtraInput.style.display = "none");
 });
 
-// T shirt extra info only show once selection is made
+/* T shirt extra info only show once selection is made */
 const tShirtSizeInput = document.querySelector("#shirt-sizes");
 const tShirtDesignInput = document.querySelector("#design");
 const tShirtColorInput = document.querySelector("#color");
@@ -52,7 +52,7 @@ tShirtDesignInput.addEventListener("change", () => {
   }
 });
 
-// resister activities section tallies cost of activities
+/* resister activities section tallies cost of activities */
 const activitiesField = document.querySelector("#activities");
 const activitiesCostDisplay = document.querySelector("#activities-cost");
 const activitiesCheckbox = document.querySelectorAll("input[type=checkbox]");
@@ -67,7 +67,10 @@ activitiesField.addEventListener("change", (e) => {
     activitiesCost += parseInt(e.target.dataset.cost);
     // loop over activities to disable any conflicts that are NOT e.target
     activitiesCheckbox.forEach((activity) => {
-      if (e.target.dataset.dayAndTime === activity.dataset.dayAndTime && activity !== e.target) {
+      if (
+        e.target.dataset.dayAndTime === activity.dataset.dayAndTime &&
+        activity !== e.target
+      ) {
         activity.parentElement.classList.add("disabled");
         activity.disabled = true;
       }
@@ -82,6 +85,7 @@ activitiesField.addEventListener("change", (e) => {
       }
     });
   }
+
   activitiesCostDisplay.innerHTML = `Total: $${activitiesCost}`;
 });
 
@@ -91,13 +95,14 @@ activitiesCheckbox.forEach((checkbox) =>
     checkbox.parentElement.classList.add("focus");
   })
 );
+
 activitiesCheckbox.forEach((checkbox) =>
   checkbox.addEventListener("blur", () => {
     checkbox.parentElement.classList.remove("focus");
   })
 );
 
-// filter payment options based on users selection
+/* filter payment options based on users selection */
 const paymentMethodInput = document.querySelector("#payment");
 const paymentCreditCard = document.querySelector("#credit-card");
 const paymentPayPal = document.querySelector("#paypal");
@@ -125,7 +130,7 @@ paymentMethodInput.addEventListener("change", () => {
   }
 });
 
-// helper functions for validation
+/* helper functions for validation */
 // name validation
 const nameValidate = () => {
   const regex = /^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*|\w{2,}$/;
@@ -184,7 +189,6 @@ const activitiesValidate = () => {
 };
 
 // fucntion to validate credit card info if active
-
 // is card num valid
 const cardNumInput = document.querySelector("#cc-num");
 const zipInput = document.querySelector("#zip");
@@ -194,16 +198,19 @@ const cardNumValidate = (cardNum) => {
   const cardRegex = /^[1-9]{13,15}$/;
   return cardRegex.test(cardNum);
 };
+
 // is zip valid
 const zipValidate = (zip) => {
   const zipRegex = /^[1-9]{5}$/;
   return zipRegex.test(zip);
 };
+
 // is cvv valid
 const cvvValidate = (cvv) => {
   const cvvRegex = /^[1-9]{3}$/;
   return cvvRegex.test(cvv);
 };
+
 const creditCardValidate = (cardNum, zip, cvv) => {
   if (paymentMethodInput.options[1].selected) {
     if (
@@ -222,8 +229,7 @@ const creditCardValidate = (cardNum, zip, cvv) => {
   }
 };
 
-// form submit handler
-//
+/* form submit handler */
 form.addEventListener("submit", (e) => {
   // capture results of each test
   const isNameValid = nameValidate();
@@ -231,7 +237,7 @@ form.addEventListener("submit", (e) => {
   const isActivitiesValid = activitiesValidate();
   const isCreditCardValid = creditCardValidate();
 
-  // check if all valid
+  // check if all valid, if valid sumbit, if not prevent default
   const isFormValid =
     isNameValid && isEmailValid && isActivitiesValid && isCreditCardValid;
   if (isFormValid) {
