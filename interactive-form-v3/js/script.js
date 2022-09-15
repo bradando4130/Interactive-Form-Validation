@@ -139,10 +139,12 @@ const nameValidate = () => {
     nameInput.parentElement.classList.add("valid");
     nameInput.parentElement.classList.remove("not-valid");
     nameInput.parentElement.lastElementChild.style.display = "";
+    return true;
   } else {
     nameInput.parentElement.classList.add("not-valid");
     nameInput.parentElement.classList.remove("valid");
     nameInput.parentElement.lastElementChild.style.display = "block";
+    return false;
   }
 };
 
@@ -161,16 +163,19 @@ const emailValidate = () => {
     emailInput.parentElement.classList.add("not-valid");
     emailInput.parentElement.classList.remove("valid");
     emailInput.parentElement.lastElementChild.style.display = "block";
+    return false;
   } else if (regex.test(emailInput.value)) {
     emailInput.parentElement.classList.add("valid");
     emailInput.parentElement.classList.remove("not-valid");
     emailInput.parentElement.lastElementChild.style.display = "";
+    return true;
   } else {
     emailInput.parentElement.classList.add("not-valid");
     emailInput.parentElement.classList.remove("valid");
     emailInput.parentElement.lastElementChild.innerText =
       "Email address must be formatted correctly";
     emailInput.parentElement.lastElementChild.style.display = "block";
+    return false;
   }
   return;
 };
@@ -184,14 +189,16 @@ const activitiesValidate = () => {
     activitiesField.classList.add("valid");
     activitiesField.classList.remove("not-valid");
     activitiesField.lastElementChild.style.display = "";
+    return true;
   } else {
     activitiesField.classList.add("not-valid");
     activitiesField.classList.remove("valid");
     activitiesField.lastElementChild.style.display = "block";
+    return false;
   }
 };
 // run validate when user changes form
-activitiesField.addEventListener('change', activitiesValidate);
+activitiesField.addEventListener("change", activitiesValidate);
 
 // fucntion to validate credit card info if active
 // is card num valid
@@ -205,11 +212,12 @@ const cardNumValidate = (cardNum) => {
     cardNumInput.parentElement.classList.add("valid");
     cardNumInput.parentElement.classList.remove("not-valid");
     cardNumInput.parentElement.lastElementChild.style.display = "";
-    return;
+    return true;
   } else {
     cardNumInput.parentElement.classList.add("not-valid");
     cardNumInput.parentElement.classList.remove("valid");
     cardNumInput.parentElement.lastElementChild.style.display = "block";
+    return false;
   }
 };
 
@@ -220,11 +228,12 @@ const zipValidate = (zip) => {
     zipInput.parentElement.classList.add("valid");
     zipInput.parentElement.classList.remove("not-valid");
     zipInput.parentElement.lastElementChild.style.display = "";
-    return;
+    return true;
   } else {
     zipInput.parentElement.classList.add("not-valid");
     zipInput.parentElement.classList.remove("valid");
     zipInput.parentElement.lastElementChild.style.display = "block";
+    return false;
   }
 };
 
@@ -235,11 +244,12 @@ const cvvValidate = (cvv) => {
     cvvInput.parentElement.classList.add("valid");
     cvvInput.parentElement.classList.remove("not-valid");
     cvvInput.parentElement.lastElementChild.style.display = "";
-    return;
+    return true;
   } else {
     cvvInput.parentElement.classList.add("not-valid");
     cvvInput.parentElement.classList.remove("valid");
     cvvInput.parentElement.lastElementChild.style.display = "block";
+    return false;
   }
 };
 
@@ -248,7 +258,7 @@ const creditCardValidate = () => {
     const isCvvValid = cvvValidate(cvvInput.value);
     const isZipValid = zipValidate(zipInput.value);
     const isCardNumValid = cardNumValidate(cardNumInput.value);
-    isCvvValid && isZipValid && isCardNumValid ? true : false;
+    return isCvvValid && isZipValid && isCardNumValid ? true : false;
   }
 };
 
