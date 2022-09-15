@@ -45,6 +45,7 @@ tShirtColorSection.style.display = "none";
 
 tShirtDesignInput.addEventListener("change", () => {
   tShirtColorSection.style.display = "";
+  tShirtColorInput.selectedIndex = 0;
   for (let i = 0; i < tShirtColorInput.options.length; i++) {
     tShirtDesignInput.value === tShirtColorInput.options[i].dataset.theme
       ? (tShirtColorInput.options[i].hidden = false)
@@ -146,7 +147,7 @@ const nameValidate = () => {
 };
 
 // validation for name field on keyup with debounce to not fire all the time
-nameInput.addEventListener("keyup", debounce(nameValidate));
+nameInput.addEventListener("blur", debounce(nameValidate));
 
 // email validation
 const emailInput = document.querySelector("#email");
@@ -157,6 +158,8 @@ const emailValidate = () => {
   if (emailInput.value === "") {
     emailInput.parentElement.lastElementChild.innerText =
       "Email field cannot be blank";
+    emailInput.parentElement.classList.add("not-valid");
+    emailInput.parentElement.classList.remove("valid");
     emailInput.parentElement.lastElementChild.style.display = "block";
   } else if (regex.test(emailInput.value)) {
     emailInput.parentElement.classList.add("valid");
@@ -173,7 +176,7 @@ const emailValidate = () => {
 };
 
 // validation on keyup for email section, but using debounce to not fire all the time
-emailInput.addEventListener("keyup", debounce(emailValidate));
+emailInput.addEventListener("blur", debounce(emailValidate));
 
 // function to make sure > 0 activities checked
 const activitiesValidate = () => {
@@ -187,6 +190,8 @@ const activitiesValidate = () => {
     activitiesField.lastElementChild.style.display = "block";
   }
 };
+// run validate when user changes form
+activitiesField.addEventListener('change', activitiesValidate);
 
 // fucntion to validate credit card info if active
 // is card num valid
@@ -196,36 +201,54 @@ const cvvInput = document.querySelector("#cvv");
 
 const cardNumValidate = (cardNum) => {
   const cardRegex = /^[1-9]{13,15}$/;
-  return cardRegex.test(cardNum);
+  if (cardRegex.test(cardNum)) {
+    cardNumInput.parentElement.classList.add("valid");
+    cardNumInput.parentElement.classList.remove("not-valid");
+    cardNumInput.parentElement.lastElementChild.style.display = "";
+    return;
+  } else {
+    cardNumInput.parentElement.classList.add("not-valid");
+    cardNumInput.parentElement.classList.remove("valid");
+    cardNumInput.parentElement.lastElementChild.style.display = "block";
+  }
 };
 
 // is zip valid
 const zipValidate = (zip) => {
   const zipRegex = /^[1-9]{5}$/;
-  return zipRegex.test(zip);
+  if (zipRegex.test(zip)) {
+    zipInput.parentElement.classList.add("valid");
+    zipInput.parentElement.classList.remove("not-valid");
+    zipInput.parentElement.lastElementChild.style.display = "";
+    return;
+  } else {
+    zipInput.parentElement.classList.add("not-valid");
+    zipInput.parentElement.classList.remove("valid");
+    zipInput.parentElement.lastElementChild.style.display = "block";
+  }
 };
 
 // is cvv valid
 const cvvValidate = (cvv) => {
   const cvvRegex = /^[1-9]{3}$/;
-  return cvvRegex.test(cvv);
+  if (cvvRegex.test(cvv)) {
+    cvvInput.parentElement.classList.add("valid");
+    cvvInput.parentElement.classList.remove("not-valid");
+    cvvInput.parentElement.lastElementChild.style.display = "";
+    return;
+  } else {
+    cvvInput.parentElement.classList.add("not-valid");
+    cvvInput.parentElement.classList.remove("valid");
+    cvvInput.parentElement.lastElementChild.style.display = "block";
+  }
 };
 
-const creditCardValidate = (cardNum, zip, cvv) => {
+const creditCardValidate = () => {
   if (paymentMethodInput.options[1].selected) {
-    if (
-      cardNumValidate(cardNumInput.value) &&
-      zipValidate(zipInput.value) &&
-      cvvValidate(cvvInput.value)
-    ) {
-      paymentMethodInput.parentElement.classList.add("valid");
-
-      paymentMethodInput.parentElement.lastElementChild.style.display = "";
-    } else {
-      paymentMethodInput.parentElement.classList.add("not-valid");
-      paymentMethodInput.parentElement.classList.remove("valid");
-      paymentMethodInput.parentElement.lastElementChild.style.display = "block";
-    }
+    const isCvvValid = cvvValidate(cvvInput.value);
+    const isZipValid = zipValidate(zipInput.value);
+    const isCardNumValid = cardNumValidate(cardNumInput.value);
+    isCvvValid && isZipValid && isCardNumValid ? true : false;
   }
 };
 
