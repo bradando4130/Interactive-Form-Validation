@@ -253,12 +253,14 @@ const cvvValidate = (cvv) => {
   }
 };
 
-const creditCardValidate = () => {
+const paymentValidate = () => {
   if (paymentMethodInput.options[1].selected) {
     const isCvvValid = cvvValidate(cvvInput.value);
     const isZipValid = zipValidate(zipInput.value);
     const isCardNumValid = cardNumValidate(cardNumInput.value);
     return isCvvValid && isZipValid && isCardNumValid ? true : false;
+  } else {
+    return true
   }
 };
 
@@ -268,11 +270,11 @@ form.addEventListener("submit", (e) => {
   const isNameValid = nameValidate();
   const isEmailValid = emailValidate();
   const isActivitiesValid = activitiesValidate();
-  const isCreditCardValid = creditCardValidate();
+  const isPaymentValid = paymentValidate();
 
   // check if all valid, if valid sumbit, if not prevent default
   const isFormValid =
-    isNameValid && isEmailValid && isActivitiesValid && isCreditCardValid;
+    isNameValid && isEmailValid && isActivitiesValid && isPaymentValid;
   if (isFormValid) {
     return;
   } else {
