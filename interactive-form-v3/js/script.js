@@ -5,7 +5,7 @@ const form = document.querySelector("form");
 form.reset();
 
 // debounce helper function for delay on  form validation check
-const debounce = (fn, delay = 800) => {
+const debounce = (fn, delay = 2000) => {
   let timeoutId;
   return (...args) => {
     // cancel the previous timer
@@ -148,7 +148,7 @@ const nameValidate = () => {
   }
 };
 
-// validation for name field on keyup with debounce to not fire all the time
+// validation for name field on blur with debounce to not fire too quick
 nameInput.addEventListener("blur", debounce(nameValidate));
 
 // email validation
@@ -180,7 +180,7 @@ const emailValidate = () => {
   return;
 };
 
-// validation on keyup for email section, but using debounce to not fire all the time
+// validation on keyup for email section on blur, but using debounce to not fire instantly
 emailInput.addEventListener("blur", debounce(emailValidate));
 
 // function to make sure > 0 activities checked
