@@ -134,8 +134,9 @@ paymentMethodInput.addEventListener("change", () => {
 /* helper functions for validation */
 // name validation
 const nameValidate = () => {
+  const name = nameInput.value.trim();
   const regex = /^\s*([A-Za-z]{1,}([\.,] |[-']| ))+[A-Za-z]+\.?\s*|\w{2,}$/;
-  if (regex.test(nameInput.value)) {
+  if (regex.test(name)) {
     nameInput.parentElement.classList.add("valid");
     nameInput.parentElement.classList.remove("not-valid");
     nameInput.parentElement.lastElementChild.style.display = "";
@@ -149,7 +150,7 @@ const nameValidate = () => {
 };
 
 // validation for name field on keuyp with debounce to not fire too quick
-nameInput.addEventListener("keyup", (nameValidate));
+nameInput.addEventListener("keyup", nameValidate);
 
 // email validation
 const emailInput = document.querySelector("#email");
@@ -181,7 +182,7 @@ const emailValidate = () => {
 };
 
 // validation on keyup for email section on keyup, but using debounce to not fire all the time
-emailInput.addEventListener("keyup", (emailValidate));
+emailInput.addEventListener("keyup", emailValidate);
 
 // function to make sure > 0 activities checked
 const activitiesValidate = () => {
@@ -260,7 +261,7 @@ const paymentValidate = () => {
     const isCardNumValid = cardNumValidate(cardNumInput.value);
     return isCvvValid && isZipValid && isCardNumValid ? true : false;
   } else {
-    return true
+    return true;
   }
 };
 
